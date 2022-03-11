@@ -252,6 +252,8 @@ def about():
     ### Space Quality Quiz
     This demo uses [T5](https://arxiv.org/pdf/1910.10683.pdf) and [BART](https://arxiv.org/abs/1910.13461) to generate questions given a text. Feedback can be provided in order to evaluate and improve these models.
 
+    Code available at [SpaceQQuiz Github reposotory](https://github.com/expertailab/SpaceQQuiz).
+
     If you have any doubt or suggestion, please send it to [Cristian](mailto:cberrio@expert.ai), [Andrés](mailto:agarcia@expert.ai) or [Jose](mailto:jmgomez@expert.ai).
     """)
 
