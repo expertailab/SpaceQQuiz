@@ -75,20 +75,38 @@ def question_generation_demo_v2(args):
         st.session_state['df'] = None
     if 'download' not in st.session_state:
         st.session_state['download'] = None    
+    if 'test-document' not in st.session_state:
+        st.session_state['test-document'] = None 
+
+    st.markdown("Code available at [SpaceQQuiz Github reposotory](https://github.com/expertailab/SpaceQQuiz).")
 
     uploaded_file = st.file_uploader("Choose a file")
 
-    if uploaded_file is not None:
+    if uploaded_file:
+        st.session_state['test-document'] = False
 
-        if not st.session_state['uploaded_file'] or (st.session_state['uploaded_file'].name != uploaded_file.name):
+    use_test_document = st.button("Use test document")
+    if use_test_document:
+        record = st.uploaded_file_manager.UploadedFileRec('','RD-2-OCCand-ESTRACK-operation-manual.pdf','',b'')
+        uploaded_file = st.uploaded_file_manager.UploadedFile(record)
+
+    st.markdown("Test document link: [RD-2-OCCand-ESTRACK-operation-manual.pdf](https://esastar-publication.sso.esa.int/api/filemanagement/download?url=emits.sso.esa.int/emits-doc/ESOC/5189/RD-2-OCCand-ESTRACK-operation-manual.pdf)")
+
+
+    if uploaded_file is not None or st.session_state['test-document']:
+
+        if (not st.session_state['test-document']) and (not st.session_state['uploaded_file'] or (st.session_state['uploaded_file'].name != uploaded_file.name)):
             my_bar = st.progress(0)
             st.session_state['uploaded_file'] = uploaded_file
 
-            with open(os.path.join("uploads",uploaded_file.name),"wb") as f:
-                f.write((uploaded_file).getbuffer())
+            if use_test_document:
+                st.session_state['test-document'] = True
+            else:    
+                with open(os.path.join("uploads",uploaded_file.name),"wb") as f:
+                    f.write((uploaded_file).getbuffer())
             my_bar.progress(0.33)
 
-            result = subprocess.run("java -jar pdf-extractor-0.2.0-SNAPSHOT-standalone.jar -c esa-tde-docs_config.json", shell=True)
+            result = subprocess.run("java -jar pdf-extractor-0.2.0-SNAPSHOT-standalone.jar -c "+("esa-tde-docs_config.json" if not use_test_document else "esa-tde-docs-test_config.json"), shell=True)
             my_bar.progress(0.66)
 
             with open(os.path.join("target","esa-tde-txts-out",uploaded_file.name+".json"), encoding="utf8") as json_file:
@@ -252,9 +270,7 @@ def about():
     ### Space Quality Quiz
     SpaceQQuiz is a system to generate quizzes, a common resource to evaluate training sessions, out of quality procedure documents in the Space domain. Our system leverages state of the art auto-regressive models like [T5](https://arxiv.org/pdf/1910.10683.pdf) and [BART](https://arxiv.org/abs/1910.13461) to generate questions, and a [RoBERTa](https://arxiv.org/abs/1907.11692) model to extract answer for the questions, thus verifying their suitability.
 
-    Code available at [SpaceQQuiz Github reposotory](https://github.com/expertailab/SpaceQQuiz).
-
-    If you have any doubt or suggestion, please send it to [Cristian](mailto:cberrio@expert.ai), [Andrés](mailto:agarcia@expert.ai) or [Jose](mailto:jmgomez@expert.ai).
+    If you have any doubt or suggestion, please send it to [Andrés García](mailto:agarcia@expert.ai), [Cristian Berrío](mailto:cberrio@expert.ai) or [Jose Manuel Gómez](mailto:jmgomez@expert.ai).
     """)
 
 def run_app(args, session_state=None):

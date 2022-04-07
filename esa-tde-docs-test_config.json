@@ -1,0 +1,9 @@
+{
+    "net.expertsystem.lab/pdf-extractor": {
+        "kafka-server": "172.16.32.80:9092",
+        "raw-doc-ktopic": "t1",
+        "pdf-dir": "./uploads-test",
+        "push-output": false,
+        "debug-out-dir": "target/esa-tde-txts-out"
+    }
+}
