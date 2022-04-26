@@ -78,7 +78,7 @@ def question_generation_demo_v2(args):
     if 'test-document' not in st.session_state:
         st.session_state['test-document'] = None 
 
-    st.markdown("Code available at [SpaceQQuiz Github reposotory](https://github.com/expertailab/SpaceQQuiz).")
+    st.markdown("Code available at [SpaceQQuiz Github repository](https://github.com/expertailab/SpaceQQuiz).")
 
     uploaded_file = st.file_uploader("Choose a file")
 
@@ -121,6 +121,7 @@ def question_generation_demo_v2(args):
             my_bar.empty()
 
         form = st.form(key='my_form')
+        form.write('Select the sections you want to use to generate questions by clicking on the checkboxes, when finished, click on the "Generate questions" button.')
         select_section = {i:form.checkbox(snipet.split('\n')[0], value=False,key=id(i)) for i,snipet in enumerate(st.session_state.snipets)}
         generate_questions_button = form.form_submit_button('Generate questions')
 
@@ -179,6 +180,7 @@ def question_generation_demo_v2(args):
                 "suppressRowClickSelection":"true"
             }      
             with st.form("my_form2"):
+                st.write('Select the questions you want to include in the quiz by clicking on the checkboxes, when you are done, click on the "Generate document" button.')
                 grid_return = AgGrid(st.session_state['df'], grid_options, update_mode=GridUpdateMode.MODEL_CHANGED)
                 new_df = grid_return['selected_rows']
                 generate_document = st.form_submit_button("Generate document")
