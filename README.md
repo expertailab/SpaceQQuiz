@@ -18,3 +18,21 @@ pip install -r requirements.txt
 ```bash
 streamlit run run_question_generation.py -- --question_generation_endpoint=$QUESTION_GENERATION_ENDPOINT
 ```
+
+## Question Generation Module
+Create question-generation conda environment and install required libraries (for GPU use, check CUDA version):
+```bash
+conda create -n question-generation python=3.7
+conda activate question-generation
+cd SpaceQQuiz/question-generation
+pip install torch==1.8.1+cu101 torchvision==0.9.1+cu101 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+pip install -r requirements.txt
+```
+
+To run the question-generation module (You need to download the question-generation-squad-bart-large and question-generation-squad-t5-large):
+```bash
+python src/app.py
+```
+
+By default the endpoints will be:
+* http://localhost:8080/generate_questions, question generation endpoint which receives a contexts and returns a question per each model (T5 and BART).
