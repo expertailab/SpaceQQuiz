@@ -13,8 +13,15 @@ from sentence_transformers import SentenceTransformer, util
 import itertools
 from st_aggrid import AgGrid, JsCode, GridUpdateMode
 import numpy as np
+import logging
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
+formatter = logging.Formatter('%(asctime)s %(message)s')
+handler = logging.FileHandler('generated-questions.log')
+handler.setFormatter(formatter)
+logger = logging.getLogger('spaceQQuiz')
+logger.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 def rerun():
     raise st.script_runner.RerunException(st.script_request_queue.RerunData(None))
@@ -165,6 +172,9 @@ def question_generation_demo_v2(args):
             df = df[(df['question'] != '') | (df['question'] != '')]
             my_bar.empty()
             st.session_state['df'] = df
+            logger.info("Document:" + st.session_state['uploaded_file'].name if not st.session_state['test-document'] else "RD-2-OCCand-ESTRACK-operation-manual.pdf")
+            logger.info("Selected sections:\n" + "\n".join([snipet.split('\n')[0] for i,snipet in enumerate(st.session_state.snipets) if select_section[i]]))
+            logger.info("Question and answers:\n" + "\n".join([elem['question'] + '\t' + elem['answer'] for i,elem in st.session_state['df'][['question','answer']].iterrows()]))
             
         if st.session_state['df'] is not None:
             grid_options = {
