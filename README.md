@@ -36,3 +36,31 @@ python src/app.py
 
 By default the endpoints will be:
 * http://localhost:8080/generate_questions, question generation endpoint which receives a contexts and returns a question per each model (T5 and BART).
+
+How to cite
+-----------
+
+To cite this research please use the following::
+```
+@inproceedings{garcia-silva-etal-2022-generating,
+    title = "Generating Quizzes to Support Training on Quality Management and Assurance in Space Science and Engineering",
+    author = "Garcia-Silva, Andres  and
+      Berrio Aroca, Cristian  and
+      Gomez-Perez, Jose Manuel  and
+      Martinez, Jose  and
+      Fleith, Patrick  and
+      Scaglioni, Stefano",
+    editor = "Shaikh, Samira  and
+      Ferreira, Thiago  and
+      Stent, Amanda",
+    booktitle = "Proceedings of the 15th International Conference on Natural Language Generation: System Demonstrations",
+    month = jul,
+    year = "2022",
+    address = "Waterville, Maine, USA and virtual meeting",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.inlg-demos.2",
+    pages = "4--6",
+    abstract = "Quality management and assurance is key for space agencies to guarantee the success of space missions, which are high-risk and extremely costly. In this paper, we present a system to generate quizzes, a common resource to evaluate the effectiveness of training sessions, from documents about quality assurance procedures in the Space domain. Our system leverages state of the art auto-regressive models like T5 and BART to generate questions, and a RoBERTa model to extract answers for such questions, thus verifying their suitability.",
+}
+```
+```
